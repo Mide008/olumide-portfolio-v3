@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orra — Case Study | Olumide Sajowa</title>
+<meta name="description" content="A personal memory and knowledge OS built around one behavior: I may need this later, and I do not want to forget it.">
+<link rel="icon" href="../images/logo/mark-64.png">
+<link rel="stylesheet" href="../styles.css">
+<style>:root{ --signal:#c9a24a; }
+  .anti-list{ columns:2; column-gap:36px; margin-top:16px; }
+  .anti-list div{ font-family:var(--font-mono); font-size:12.5px; color:var(--paper-dim); padding:9px 0; border-bottom:1px solid var(--line); break-inside:avoid; }
+  .anti-list div::before{ content:'✕ '; color:var(--mute-dim); }
+  .loop-row{ display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; font-family:var(--font-mono); font-size:12px; color:var(--paper-dim); margin:24px 0; }
+  .loop-row span.step{ border:1px solid var(--line-strong); padding:8px 16px; border-radius:100px; }
+  .loop-row span.arrow{ color:var(--signal); }
+  @media (max-width:600px){ .anti-list{ columns:1; } }
+</style>
+</head>
+<body>
+<div class="grid-field"></div>
+<a href="../index.html#work" class="cs-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>All work</a>
+
+<header class="site-nav">
+  <a href="../index.html" class="brand"><img src="../images/logo/mark-128.png" alt=""><span>Olumide Sajowa<small>Design Engineer</small></span></a>
+  <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <nav>
+    <a href="../index.html#work">Work</a>
+    <a href="../contact.html" class="nav-cta">Start a project</a>
+    <button class="theme-toggle" aria-label="Toggle theme">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button>
+  </nav>
+</header>
+
+<main>
+  <section class="cs-hero wrap">
+    <span class="tag"><span class="dot"></span>Case study 15 / Personal memory OS</span>
+    <h1 style="font-size:clamp(2.2rem,6.4vw,5.4rem); letter-spacing:-0.03em; line-height:0.98; margin-top:22px; max-width:14ch;">Orra</h1>
+    <p style="max-width:60ch; color:var(--paper-dim); font-size:17px; line-height:1.7; margin-top:24px;">A personal memory and knowledge system built around one human behavior: I may need this later, and I do not want to forget it. Not a bookmark manager. Not a Shelfy clone. A place that remembers why you saved something, and brings it back when it matters again.</p>
+    <div class="cs-meta-row">
+      <div class="cs-meta">Role<b>Product architecture, design system, full-stack build</b></div>
+      <div class="cs-meta">Stack<b>Next.js, Postgres + pgvector, private R2 storage</b></div>
+      <div class="cs-meta">Timeline<b>August 2026, phased build</b></div>
+      <div class="cs-meta">Status<b>Private daily-use build, case study only</b></div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap cs-grid">
+      <span class="index" style="grid-column:1/-1; margin-bottom:-6px;">01 / The problem</span>
+      <div></div>
+      <div class="cs-body">
+        <p>The starting point wasn't a market gap, it was a personal one. I kept finding a piece of research, a reference, a pricing idea, a good interaction pattern, and saving it somewhere, only to lose track of why I'd saved it by the time it would have actually been useful. Bookmark managers store a link. None of them store the reason. Six months later, "why did I keep this" is exactly the question none of them can answer.</p>
+        <p class="callout">The gap isn't storage. It's memory. A bookmark manager remembers that you saved something. It has no idea why, so it can never bring it back at the moment that reason becomes relevant again.</p>
+        <div class="browser-frame"><div class="chrome"><span></span><span></span><span></span><div class="url">orra — private build</div></div><img src="../images/screenshots/orra-1.jpg" alt="Orra capture and library view"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="index">The loop this is actually built around</span>
+      <div class="loop-row">
+        <span class="step">Remember / save</span><span class="arrow">→</span>
+        <span class="step">Understand</span><span class="arrow">→</span>
+        <span class="step">Connect</span><span class="arrow">→</span>
+        <span class="step">Recall</span><span class="arrow">→</span>
+        <span class="step">Act</span>
+      </div>
+      <div class="cs-body">
+        <p>I rejected building another capture tool that stops at "saved." Saving is the easy 20 percent. The system only earns its keep at the other end, when it resurfaces something unprompted: "you saved this for WorkPulse four months ago," or "you haven't opened this in six months, but it matches what you're working on right now." That resurfacing behavior is the actual product. Everything else, capture, search, the library view, exists to feed it.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap cs-grid">
+      <span class="index" style="grid-column:1/-1; margin-bottom:-6px;">02 / The thinking</span>
+      <div></div>
+      <div class="cs-body">
+        <p>The single design decision that shaped everything downstream: after capture, Orra can optionally ask one small question, "why are you keeping this?" I rejected making it required, since forcing an answer turns saving into a form, and a form is exactly the friction that makes people stop saving things altogether. It stays optional, editable, and searchable, and it becomes one input among several into how the item gets resurfaced later, never the only one.</p>
+        <p>I also rejected the generic AI-product visual language on principle, not just on taste. No glowing orb, no purple-to-blue gradient standing in for "intelligence," no sparkle wand, no floating chatbot bolted onto a sidebar-and-KPI-cards layout. That whole visual vocabulary has become shorthand for "this is an AI wrapper," and it actively undermines a product whose entire premise is being trusted with everything a person doesn't want to forget. Trust needed a calmer, more editorial visual language, not a flashier one.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap">
+      <span class="index">What I explicitly designed against</span>
+      <div class="anti-list">
+        <div>Generic purple/blue "AI" gradient language</div>
+        <div>Glowing orb, robot brain, sparkle wand, magic dust</div>
+        <div>Cards-inside-cards as the default layout</div>
+        <div>One large border radius applied to everything</div>
+        <div>Pill buttons and tags everywhere</div>
+        <div>Sidebar + KPI cards + floating chatbot, by default</div>
+        <div>Fake testimonials, logos, or metrics</div>
+        <div>Repetitive scroll fade-up on every section</div>
+        <div>3D that exists only to prove the app is modern</div>
+        <div>Hidden UI dressed up as "minimal"</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap cs-grid">
+      <span class="index" style="grid-column:1/-1; margin-bottom:-6px;">03 / The business and the users</span>
+      <div></div>
+      <div class="cs-body">
+        <div class="browser-frame"><div class="chrome"><span></span><span></span><span></span><div class="url">orra — command center</div></div><img src="../images/screenshots/orra-3.jpg" alt="Orra universal command center"></div>
+        <p>For this phase, the user is me. Orra is built and deployed privately as a real daily tool first, proven on my own knowledge work, before any decision gets made about opening it up. That ordering was deliberate: a memory product that hasn't survived its builder's own daily use for months has no business being pitched to anyone else yet.</p>
+        <p>The interaction model is a single command center rather than a set of separate destinations. Cmd/Ctrl+K opens one surface for search, ask, and commands together; Cmd/Ctrl+N opens quick capture. Critical actions stay to one or two steps by design, and the library itself refuses to force every saved item into the same rounded card: an editorial list for serious mixed knowledge work, a visual grid for screenshots and design references, a compact table for dense scanning. The content decides the shape, not a template.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section">
+    <div class="wrap cs-grid">
+      <span class="index" style="grid-column:1/-1; margin-bottom:-6px;">04 / The constraints</span>
+      <div></div>
+      <div class="cs-body">
+        <div class="browser-frame"><div class="chrome"><span></span><span></span><span></span><div class="url">orra — agent workspace</div></div><img src="../images/screenshots/orra-4.jpg" alt="Orra agent workspace"></div>
+        <p>Orra is agentic, but I rejected letting the UI collapse into "just a chatbot." The Agent is an orchestrator: it understands a goal, retrieves relevant knowledge, plans which tools to use, asks permission where the action carries risk, executes, verifies, and returns results with sources attached, visibly, not as hidden chain-of-thought dressed up as theatrical "thinking." A request like "prepare a brief on design engineering" shows its sources and its plan stage by stage, because a memory system that can't show its work isn't trustworthy enough to act on your behalf.</p>
+        <p>Everything was built to run on free-tier infrastructure for a single private user: hybrid Postgres full-text and pgvector search over chunks, private R2 storage with signed access only, magic-byte file validation, and every query scoped to the authenticated user. Paid infrastructure is an upgrade path for when growth demands it, not a Phase-1 requirement, which kept the build honest about what it actually needed on day one versus what it might need eventually.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cs-section" style="border-bottom:none;">
+    <div class="wrap cs-grid">
+      <span class="index" style="grid-column:1/-1; margin-bottom:-6px;">05 / The outcome</span>
+      <div></div>
+      <div class="cs-body">
+        <p>Orra is in private daily use, which is the only metric that matters at this stage: does it actually get used, unprompted, the way it was designed to be used. It isn't public, so I won't dress up a usage number that doesn't exist yet. What I can point to is the build discipline: a phased, gated build plan (identity and design foundation, then core infrastructure, then memory and capture, then agent and skills) rather than shipping every ambition at once, and a piece of source discipline I'm proud of, an explicit list of AI-product visual clichés the system was designed to avoid, checked against on every screen rather than assumed.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="next-project wrap">
+    <span class="label">Next case study</span>
+    <a href="studio-academy.html"><h2>Studio Academy ↗</h2></a>
+  </section>
+</main>
+
+<footer><div class="footer-mark">OLUMIDE</div><div class="wrap foot-row"><span>© 2026 Olumide Sajowa</span><div style="display:flex;gap:20px;"><a href="https://www.linkedin.com/in/olumidesajowa" target="_blank" rel="noopener">LinkedIn</a><a href="https://x.com/smyde2" target="_blank" rel="noopener">Twitter / X</a><a href="https://github.com/Mide008" target="_blank" rel="noopener">GitHub</a></div><a href="../contact.html">Get in touch</a></div></footer>
+
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="../main.js"></script>
+</body>
+</html>
