@@ -19,7 +19,10 @@ const { Resend } = require('resend');
 
 const TO_EMAIL = process.env.CONTACT_TO_EMAIL || 'olumidesajowa@gmail.com';
 const FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || 'Portfolio Contact <onboarding@resend.dev>';
-const SITE_URL = process.env.SITE_URL || 'https://portfolio-uvgo.vercel.app';
+const SITE_URL = process.env.SITE_URL || 'https://olumide-portfolio-v3.vercel.app';
+// Comma-separated list of extra allowed origins (e.g. a custom domain once connected).
+// Set ALLOWED_ORIGINS in Vercel env vars, e.g: https://olumidesajowa.com,https://www.olumidesajowa.com
+const EXTRA_ORIGINS = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
 
 // ── Rate limiting (in-memory, resets per cold start) ──────────
 const rateLimitMap = new Map();
@@ -110,7 +113,7 @@ function buildConfirmationEmail(name, subject, sentAt) {
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const allowedOrigins = [SITE_URL, 'http://localhost:3000', 'http://127.0.0.1:5500'];
+  const allowedOrigins = [SITE_URL, 'http://localhost:3000', 'http://127.0.0.1:5500', ...EXTRA_ORIGINS];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) res.setHeader('Access-Control-Allow-Origin', origin);
   res.setHeader('Access-Control-Allow-Methods', 'POST');
